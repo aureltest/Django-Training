@@ -1,0 +1,21 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+  <h2>{{ list.title }}</h2>
+
+  <ul>
+    <li>Description : {{ list.description }}</li>
+    <li>Vendu : {{ list.sold|yesno }}</li>
+    <li>Type : {{ list.get_type_display }}</li>
+    {% if list.year %}
+        <li>Année : {{ list.year }}</li>
+    {% endif%}
+    {% if list.type %}
+        <li>Type : {{ list.type }}</li>
+    {% endif%}
+  </ul>
+
+  <p>{{ band.biography }}</p>
+  <a class="btn btn-primary" href="{% url 'annonce-update' list.id %}">Editer le groupe</a>
+  <a class="btn btn-primary" href="{% url 'annonce-list' %}">Retour aux annonces</a>
+{% endblock %}
