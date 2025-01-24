@@ -1,0 +1,52 @@
+# Fichiers de cache Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de données SQLite
+*.sqlite3
+*.db
+
+# Fichiers statiques collectés
+staticfiles/
+
+# Fichiers de logs
+*.log
+
+# Fichiers média uploadés
+media/
+
+# IDE/Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Clé secrète Django
+secret_key.txt
+
+# pytest cache
+.pytest_cache/
+
+# Node modules (si vous avez un frontend)
+node_modules/
+
+# Build et distribution
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Fichiers spécifiques OS
+.DS_Store
+Thumbs.db
+
+# Fichiers de configuration locale
+local_settings.py
+settings/local.py
+
+# Fichiers temporaires
+*.sqlite3
+
+
