@@ -1,21 +1,54 @@
 {% extends 'listings/base.html' %}
 
 {% block content %}
-  <h2>{{ list.title }}</h2>
-
-  <ul>
-    <li>Description : {{ list.description }}</li>
-    <li>Vendu : {{ list.sold|yesno }}</li>
-    <li>Type : {{ list.get_type_display }}</li>
-    {% if list.year %}
-        <li>Année : {{ list.year }}</li>
-    {% endif%}
-    {% if list.type %}
-        <li>Type : {{ list.type }}</li>
-    {% endif%}
-  </ul>
-
-  <p>{{ band.biography }}</p>
-  <a class="btn btn-primary" href="{% url 'annonce-update' list.id %}">Editer le groupe</a>
-  <a class="btn btn-primary" href="{% url 'annonce-list' %}">Retour aux annonces</a>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card border-0 shadow">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h2 class="h4 mb-0">{{ list.title }}</h2>
+                    <div>
+                        <a href="{% url 'annonce-update' list.id %}" class="btn btn-sm btn-outline-light me-2">
+                            <i class="fas fa-edit"></i> Modifier
+                        </a>
+                        <a href="{% url 'annonce-delete' list.id %}" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <i class="fas fa-tag text-primary me-2"></i>Type : {{ list.get_type_display }}
+                                </li>
+                                <li class="mb-2">
+                                    <i class="fas fa-info-circle text-primary me-2"></i>Statut : 
+                                    <span class="badge {% if list.sold %}bg-success{% else %}bg-primary{% endif %}">
+                                        {{ list.sold|yesno:"Vendu,Disponible" }}
+                                    </span>
+                                </li>
+                                {% if list.year %}
+                                <li class="mb-2">
+                                    <i class="fas fa-calendar text-primary me-2"></i>Année : {{ list.year }}
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-muted mb-2">Description</h5>
+                            <p class="text-muted">{{ list.description }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <a href="{% url 'annonce-list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left me-2"></i>Retour aux annonces
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -1,15 +1,83 @@
 {% extends 'listings/base.html' %}
 
 {% block content %}
-  <h1>Groupes</h1>
+<section class="pb-5 header text-center">
+    <div class="container py-5">
+        <header class="py-5">
+            <h1 class="display-4">Groupes</h1>
+        </header>
 
-  <ul>
-    {% for band in bands %}
-      <li>
-        <a href="{% url 'band-detail' band.id %}">{{ band.name }}</a>
-        <a href="{% url 'band-update' band.id %}">[Modifier]</a>
-      </li>
-    {% endfor %}
-  </ul>
-  <a class="btn btn-primary" href="{% url 'band-create' %}">Créer un nouveau groupe</a>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card border-0 shadow">
+                    <div class="card-body p-5">
+                        <!-- Responsive table -->
+                        <div class="table-responsive">
+                            <table class="table m-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nom du groupe</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for band in bands %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>
+                                            <a href="{% url 'band-detail' band.id %}" class="text-decoration-none">
+                                                {{ band.name }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <!-- Call to action buttons -->
+                                            <ul class="list-inline m-0">
+                                                <li class="list-inline-item">
+                                                    <a href="{% url 'band-detail' band.id %}" 
+                                                       class="btn btn-primary btn-sm rounded-0" 
+                                                       data-toggle="tooltip" 
+                                                       data-placement="top" 
+                                                       title="Voir">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="{% url 'band-update' band.id %}" 
+                                                       class="btn btn-success btn-sm rounded-0" 
+                                                       data-toggle="tooltip" 
+                                                       data-placement="top" 
+                                                       title="Modifier">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item">
+                                                    <a href="{% url 'band-delete' band.id %}" 
+                                                       class="btn btn-danger btn-sm rounded-0" 
+                                                       data-toggle="tooltip" 
+                                                       data-placement="top" 
+                                                       title="Supprimer">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Create button -->
+                        <div class="text-center mt-4">
+                            <a href="{% url 'band-create' %}" class="btn btn-primary">
+                                <i class="fa fa-plus"></i> Créer un nouveau groupe
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

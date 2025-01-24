@@ -1,28 +1,66 @@
 {% extends 'listings/base.html' %}
 
 {% block content %}
-  <h2>{{ band.name }}</h2>
+<div class="container py-5">
+  <div class="row">
+      <div class="col-lg-8 mx-auto">
+          <div class="card border-0 shadow">
+              <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                  <h2 class="h4 mb-0">{{ band.name }}</h2>
+                  <div>
+                      <a href="{% url 'band-update' band.id %}" class="btn btn-sm btn-outline-light me-2">
+                          <i class="fas fa-edit"></i> Modifier
+                      </a>
+                      <a href="{% url 'band-delete' band.id %}" class="btn btn-sm btn-outline-danger">
+                          <i class="fas fa-trash"></i> Supprimer
+                      </a>
+                  </div>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <ul class="list-unstyled">
+                              <li class="mb-2"><i class="fas fa-music text-primary me-2"></i>Genre : {{ band.get_genre_display }}</li>
+                              <li class="mb-2"><i class="fas fa-calendar text-primary me-2"></i>Année : {{ band.year_formed }}</li>
+                              <li class="mb-2">
+                                  <i class="fas {% if band.active %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} me-2"></i>
+                                  Statut : {{ band.active|yesno:"Actif,Inactif" }}
+                              </li>
+                              {% if band.official_homepage %}
+                              <li>
+                                  <i class="fas fa-globe text-primary me-2"></i>
+                                  <a href="{{ band.official_homepage }}" target="_blank">Site officiel</a>
+                              </li>
+                              {% endif %}
+                          </ul>
+                      </div>
+                      <div class="col-md-6">
+                          <p class="text-muted">{{ band.biography }}</p>
+                      </div>
+                  </div>
 
-  <ul>
-    <li>Genre : {{ band.get_genre_display }}</li>
-    <li>Année de formation : {{ band.year_formed }}</li>
-    <li>Actif : {{ band.active|yesno }}</li>
-    {% if band.official_homepage %}
-      <li>
-        <a href="{{ band.official_homepage }}">{{ band.official_homepage }}</a>
-      </li>
-    {% endif %}
-  </ul>
-
-  <p>{{ band.biography }}</p>
-  <a class="btn btn-primary" href="{% url 'band-update' band.id %}">Editer le groupe</a>
-  <h4>Annonces liées aux groupes :</h4>
-  <ul>
-    {% for listing in band.listing_set.all %}
-      <li>
-        <a href="{% url 'annonce-detail' listing.id %}">{{ listing.title }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-  <a class="btn btn-primary" href="{% url 'band-list' %}">Retour aux groupes</a>
+                  <div class="mt-4">
+                      <h4 class="h5 mb-3"><i class="fas fa-bullhorn text-primary me-2"></i>Annonces liées</h4>
+                      {% if band.listing_set.all %}
+                          <div class="list-group">
+                          {% for listing in band.listing_set.all %}
+                              <a href="{% url 'annonce-detail' listing.id %}" class="list-group-item list-group-item-action">
+                                  <i class="fas fa-tag me-2"></i>{{ listing.title }}
+                              </a>
+                          {% endfor %}
+                          </div>
+                      {% else %}
+                          <p class="text-muted">Aucune annonce liée à ce groupe.</p>
+                      {% endif %}
+                  </div>
+              </div>
+              <div class="card-footer bg-light">
+                  <a href="{% url 'band-list' %}" class="btn btn-secondary">
+                      <i class="fas fa-arrow-left me-2"></i>Retour aux groupes
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 {% endblock %}
